@@ -4,7 +4,7 @@ pragma solidity ^0.8.20;
 import {Test} from "forge-std/Test.sol";
 import {Example} from "src/Example.sol";
 
-contract ExampleTest is Test {
+contract ExampleUnit is Test {
     /// @dev Basically the exploit process is the following:
     /// 1. The attacker calls `delegate` with their own address;
     /// 2. The attacker calls `transferDelegation` with a carefully crafted address

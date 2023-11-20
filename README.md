@@ -1,5 +1,7 @@
 An example of how some automated testing tools will fail to discover a very precise exploit in a contract. Namely, fuzzing, formal verification (Certora) and symbolic execution (Halmos).
 
+_This is not a realistic exploit. Here, it relies on the fact that the calculation of the storage slot for the owner is publicly available, and incidentally involves the same storage value as the one used for the delegation... which can be changed with entirely arbitrary values._
+
 ## Overview
 
 The issue is quite simple, yet very unique.

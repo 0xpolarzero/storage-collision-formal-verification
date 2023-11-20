@@ -1,66 +1,23 @@
-## Foundry
+An example of how some automated testing tools will fail to discover a very precise exploit in a contract. Namely, fuzzing, formal verification (Certora) and symbolic execution (Halmos).
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+## Overview
 
-Foundry consists of:
+The issue is quite simple, yet very unique.
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+Basically, it occurs in a two-step process:
 
-## Documentation
+1. A user calls `delegate` with any address (different than the current address at the `OWNER_SLOT`);
+2. The user calls `transferDelegation` with a unique address, that when hashed will produce a storage slot that collides with the `OWNER_SLOT`.
+   => which will write the address passed in the first step on the `OWNER_SLOT`, effectively changing the owner of the contract.
 
-https://book.getfoundry.sh/
+## Why is this not caught?
 
-## Usage
+### Fuzzing
 
-### Build
+With [stateless fuzzing](./test/fuzzing/stateless/), it's just impossible to catch this. The exploit requires a prior call to `delegate`; otherwise, the call to `transferDelegation`, even with the precise exploit address, will just override the `OWNER_SLOT` with the address 0 (current delegates). Which is precisely what the owner is already.
 
-```shell
-$ forge build
-```
+With [stateful fuzzing](./test/fuzzing/stateful/), it becomes a _possibility_. Well, whenever an address calling `transferDelegation` has already called `delegate`, with any address, in the same run. However, it would need to pass the exact unique address that would collide with the `OWNER_SLOT`. Not impossible, but very unlikely.
 
-### Test
+### Formal Verification
 
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+Certora/Halmos: no idea; waiting for answers from the teams.

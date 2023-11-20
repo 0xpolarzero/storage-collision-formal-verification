@@ -10,6 +10,12 @@ Basically, it occurs in a two-step process:
 2. The user calls `transferDelegation` with a unique address, that when hashed will produce a storage slot that collides with the `OWNER_SLOT`.
    => which will write the address passed in the first step on the `OWNER_SLOT`, effectively changing the owner of the contract.
 
+## Running the exploit
+
+See [ExampleUnit.t.sol](./test/unit/ExampleUnit.t.sol) for the exploit code. You will need to have [Foundry installed](https://book.getfoundry.sh/getting-started/installation).
+
+`forge test --mt test_ownerAlwaysTheSame`
+
 ## Why is this not caught?
 
 ### Fuzzing

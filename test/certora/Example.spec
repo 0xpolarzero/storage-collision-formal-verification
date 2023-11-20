@@ -61,20 +61,3 @@ rule changeOwnerPreciseSteps(method f) {
 
     assert getOwner() == owner;
 }
-
-
-/* -------------------------------------------------------------------------- */
-/*                                   HELPERS                                  */
-/* -------------------------------------------------------------------------- */
-
-/// @dev Provide specific parameters for selected functions
-function callFunctionWithParams(method f, env e, address target) {
-    if (f.selector == sig:delegate(address).selector) {
-        delegate(e, target);
-    } else if (f.selector == sig:transferDelegation(address).selector) {
-        transferDelegation(e, target);
-    } else {
-        calldataarg args;
-        f(e, args);
-    }
-}

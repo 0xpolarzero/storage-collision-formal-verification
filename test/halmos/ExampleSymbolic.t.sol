@@ -42,8 +42,8 @@ contract ExampleSymbolic is SymTest, Test {
         assertEq(example.getOwner(), ownerBefore, "owner not changed");
     }
 
-    /// @dev This one should definitely pass, right?
-    /// The only condition is that target = TARGET_ADDRESS
+    /// @dev This one should definitely break the assertion, right?
+    /// The only condition to do so is that target = TARGET_ADDRESS
     function check_GUIDED_ownerAlwaysTheSame() external {
         address target = svm.createAddress("target");
         address ownerBefore = example.getOwner();

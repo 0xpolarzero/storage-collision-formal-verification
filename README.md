@@ -53,6 +53,14 @@ There are a few reasons why Halmos won't catch this:
 
 _From explanations by [karmacoma](https://twitter.com/0xkarmacoma) and [Daejun Park](https://twitter.com/daejunpark) from the Halmos team, possibly biased by my own understanding._
 
+## How to not do this
+
+There are a few things not to do when using arbitrary storage slots:
+
+- don't use arbitrary storage slots (if you don't really need);
+- don't expose the storage slot calculation publicly;
+- don't use a `uint256` as the last encoded parameter, or pay extra attention to it (considering existing storage slots);
+
 ## You can't break cryptography with symbolic execution...
 
 Yeah, formal verification won't actually _compute_ all possible hashes for a given parameter. Otherwise, it would not be really different that brute-forcing the hash. Take this example with Halmos, trying to break the `permit` function from OpenZeppelin's `ERC20Permit`:

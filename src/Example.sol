@@ -12,6 +12,8 @@ contract Example {
     // keccak256(abi.encodePacked(COUNTER, NAME, VERSION))
     // (uint128(0), "ExampleOwnerSlot", uint256(1))
     bytes32 constant OWNER_SLOT = 0x13bb85518f574144ff9b162bdf31313f2d495714b5b456e7ac192a698d8aa3c1;
+    // @audit Or remove the constant keyword to see Certora actually catch the collision
+    // bytes32 OWNER_SLOT = 0x13bb85518f574144ff9b162bdf31313f2d495714b5b456e7ac192a698d8aa3c1;
 
     mapping(address => uint256) public balances; // storage slot 0
     mapping(address => address) public delegates; // storage slot 1

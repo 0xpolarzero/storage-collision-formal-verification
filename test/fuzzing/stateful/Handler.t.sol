@@ -24,7 +24,7 @@ contract Handler is Test {
         example.transferDelegation(_target);
     }
 
-    /// @dev Uncomment this to see the invariant break instantly
+    // @audit Uncomment this to see the invariant break instantly
     // function BREAK_transferDelegation() external {
     //     example.transferDelegation(TARGET_ADDRESS);
     // }

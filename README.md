@@ -57,9 +57,9 @@ _From explanations by [karmacoma](https://twitter.com/0xkarmacoma) and [Daejun P
 
 There are a few things not to do when using arbitrary storage slots:
 
-- don't use arbitrary storage slots (if you don't really need);
-- don't expose the storage slot calculation publicly;
-- don't use a `uint256` as the last encoded parameter, or pay extra attention to it (considering existing storage slots);
+- don't use arbitrary storage slots if you don't really need it, or are not comfortable with hash collisions and storage integrity/slot calculation;
+- obviously, if the slot calculation was not exposed here, it _should_ not be deducible from the contract—although this is not an excuse for not ensuring this can't happen;
+- be careful when using a user-provided input as a key for a mapping, as it will be used for the slot calculation, so the user might be able to force a preimage—or just don't do it at all;
 
 ## You can't break cryptography with symbolic execution...
 
